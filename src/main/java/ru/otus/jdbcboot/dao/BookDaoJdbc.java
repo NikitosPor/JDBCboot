@@ -4,6 +4,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.jdbcboot.domain.Book;
 
@@ -30,20 +32,28 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public void insert(Book book) {
-     //   MapSqlParameterSource params = new
-     //   namedParameterJdbcOperations.query();
+    public long insertBook(Book book) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        HashMap<String, String> bookMap = new HashMap<>();
+        bookMap.put("TITLE", book.getTitle());
+        bookMap.put("AUTHOR", book.getAuthor());
+        bookMap.put("GENRE", book.getGenre());
+        params.addValues(bookMap);
+        KeyHolder kh = new GeneratedKeyHolder();
+
+        jdbc.update("insert into BOOKS ('TITLE', 'AUTHOR', 'GENRE') values (':TITLE', ':AUTHOR', ':GENRE')", params, kh);
+    return Objects.requireNonNull(kh.getKey()).longValue();
     }
 
     @Override
-    public Book getById(long id) {
+    public Book getByBookId(long id) {
         final Map<String, Object> params = new HashMap<>(1);
         params.put("ID", id);
-       return namedParameterJdbcOperations.queryForObject("select ID, TITLE, AUTHOR, GENRE from BOOKS where ID = :ID", params, new BookMapper());
+        return namedParameterJdbcOperations.queryForObject("select ID, TITLE, AUTHOR, GENRE from BOOKS where ID = :ID", params, new BookMapper());
     }
 
     @Override
-    public List<Book> getAll() {
+    public List<Book> getAllBooks() {
         return jdbc.query("select ID, TITLE, AUTHOR, GENRE from BOOKS", new BookMapper());
     }
 
@@ -54,7 +64,7 @@ public class BookDaoJdbc implements BookDao {
         namedParameterJdbcOperations.update("delete from BOOKS where ID = :ID", params);
     }
 
-    private static class BookMapper implements RowMapper<Book>{
+    private static class BookMapper implements RowMapper<Book> {
         @Override
         public Book mapRow(ResultSet resultSet, int i) throws SQLException {
             long id = resultSet.getLong("ID");
