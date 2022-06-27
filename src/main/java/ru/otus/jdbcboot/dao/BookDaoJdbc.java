@@ -26,7 +26,7 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public int count() {
+    public int countBook() {
         Integer count = jdbc.queryForObject("select count(*) from BOOKS", Integer.class);
         return count == null ? 0 : count;
     }
@@ -34,15 +34,15 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public long insertBook(Book book) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        HashMap<String, String> bookMap = new HashMap<>();
-        bookMap.put("TITLE", book.getTitle());
-        bookMap.put("AUTHOR", book.getAuthor());
-        bookMap.put("GENRE", book.getGenre());
-        params.addValues(bookMap);
-        KeyHolder kh = new GeneratedKeyHolder();
+        params.addValue("TITLE", book.getTitle());
+        params.addValue("AUTHOR", book.getAuthor());
+        params.addValue("GENRE", book.getGenre());
 
-        jdbc.update("insert into BOOKS ('TITLE', 'AUTHOR', 'GENRE') values (':TITLE', ':AUTHOR', ':GENRE')", params, kh);
-    return Objects.requireNonNull(kh.getKey()).longValue();
+        KeyHolder kh = new GeneratedKeyHolder();
+        String insertQuery = "insert into BOOKS (TITLE, AUTHOR, GENRE) values (:TITLE, :AUTHOR, :GENRE)";
+
+        namedParameterJdbcOperations.update(insertQuery, params, kh);
+        return Objects.requireNonNull(kh.getKey()).longValue();
     }
 
     @Override
