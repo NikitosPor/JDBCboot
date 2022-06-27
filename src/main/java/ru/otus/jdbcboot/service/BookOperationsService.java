@@ -30,13 +30,12 @@ public class BookOperationsService {
             listOfStrings.add(data);
         }
         Book book = new Book(1, listOfStrings.get(0), listOfStrings.get(1), listOfStrings.get(2));
-        //   long id =
+
         return bookDaoJdbc.insertBook(book);
-        //   return bookDaoJdbc.getByBookId(id);
     }
 
     public void deleteBookById(long id) {
-            bookDaoJdbc.deleteBookById(id);
+        bookDaoJdbc.deleteBookById(id);
     }
 
     public Book getBookById(long id) {
@@ -44,7 +43,7 @@ public class BookOperationsService {
     }
 
     public int printNumberOfAllBooks() {
-            return bookDaoJdbc.countBook();
+        return bookDaoJdbc.countBook();
     }
 
     public List<Book> printAllBooks() {
