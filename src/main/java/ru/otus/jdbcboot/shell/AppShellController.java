@@ -60,20 +60,4 @@ public class AppShellController {
         }
     }
 
-//    @ShellMethod(value = "Test initiation", key = {"e", "exam"})
-//    @ShellMethodAvailability(value = "isConfirmationReceived")
-//    public String askForTestStart(String studentSolution) throws Exception {
-//        if (Objects.equals(studentSolution, "start")) {
-//            app.run();
-//            return "Тест завершен";
-//        } else {
-//            return "Если хотите запустить тест сначала, то введите команду 'e start'";
-//        }
-//    }
-//
-//    private Availability isConfirmationReceived() {
-//        return Objects.equals(personalInfoUsageConfirmation, "yes")
-//                ? Availability.available()
-//                : Availability.unavailable("Сначала подтвердите ваше согласие на обработку персональных данных, вызвав команду 'c yes'");
-//    }
 }
