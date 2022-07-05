@@ -13,9 +13,9 @@ import ru.otus.jdbcboot.domain.Book;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 @DisplayName("Тест сервиса BookOperationsService")
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 class BookOperationsServiceTest {
 
@@ -49,9 +49,10 @@ class BookOperationsServiceTest {
 
     @Test
     void getBookByIdTest() {
-        Book expectedBook = new Book(0, "Anna Karenina", "Leo Tolstoy", "Drama");
-        long id = bookDaoJdbc.insertBook(expectedBook);
-        assertThat(bookOperationsService.getBookById(id))
+        Book expectedBook = new Book(10, "Anna Karenina", "Leo Tolstoy", "Drama");
+        when(bookDaoJdbc.getByBookId(10)).thenReturn(expectedBook); //  дописал А
+
+        assertThat(bookOperationsService.getBookById(10))
                 .isEqualTo(expectedBook);
     }
 
