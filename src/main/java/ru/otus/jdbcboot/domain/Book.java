@@ -1,31 +1,33 @@
 package ru.otus.jdbcboot.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "BOOKS")
 public final class Book {
-    private final long id;
-    private final String title;
-    private final String author;
-    private final String genre;
 
-    public Book(long id, String title, String author, String genre) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.genre = genre;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    public long getId(){
-        return id;
-    }
+    @Column(name = "TITLE", nullable = false, unique = true)
+    private String title;
 
-    public String getTitle(){
-        return title;
-    }
+    @Column(name = "AUTHOR", nullable = false)
+    private String author;
 
-    public String getAuthor(){
-        return author;
-    }
+    @Column(name = "GENRE", nullable = false)
+    private String genre;
 
-    public String getGenre(){
-        return genre;
-    }
+    @OneToMany(targetEntity = Comment.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "BOOK_ID")
+    private List<Comment> comments;
 }

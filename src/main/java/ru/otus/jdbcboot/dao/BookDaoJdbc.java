@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.jdbcboot.domain.Book;
 
 import java.util.*;
@@ -26,12 +27,14 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int countBook() {
         Integer count = jdbc.queryForObject("select count(*) from BOOKS", Integer.class);
         return count == null ? 0 : count;
     }
 
     @Override
+    @Transactional
     public long insertBook(Book book) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("TITLE", book.getTitle());
@@ -46,6 +49,7 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Book getByBookId(long id) {
         final Map<String, Object> params = new HashMap<>(1);
         params.put("ID", id);
@@ -53,11 +57,13 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
         return jdbc.query("select ID, TITLE, AUTHOR, GENRE from BOOKS", new BookMapper());
     }
 
     @Override
+    @Transactional
     public void deleteBookById(long id) {
         final Map<String, Object> params = new HashMap<>(1);
         params.put("ID", id);
