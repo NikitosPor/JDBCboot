@@ -20,9 +20,9 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public int countBook() {
+    public long countBook() {
         Query query = em.createQuery("select count(b) from Book b");
-        return (int) query.getSingleResult();
+        return (long) query.getSingleResult();
     }
 
     @Override
@@ -30,16 +30,18 @@ public class BookRepositoryJpa implements BookRepository {
     public Book insertBook(Book book) {
         if (book.getId() <= 0) {
             em.persist(book);
-            return book;
         } else {
-            return em.merge(book);
+            em.merge(book);
         }
+        return book;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Book> getByBookId(long id) {
-        return Optional.ofNullable(em.find(Book.class, id));
+    public Book getBookById(long id) {
+        Query query = em.createQuery("select b from Book b where b.id= :id", Book.class);
+        query.setParameter("id", id);
+        return (Book) query.getSingleResult();
     }
 
     @Override

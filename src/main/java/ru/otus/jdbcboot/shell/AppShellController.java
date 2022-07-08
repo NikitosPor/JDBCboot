@@ -28,6 +28,13 @@ public class AppShellController {
         ioService.outputString(bookString);
     }
 
+    @ShellMethod(value = "Обновление книги в таблице BOOKS", key = {"bu", "book update"})
+    public void askForBookUpdate() {
+        bookOperationsService.updateBook();
+        String bookString = String.format("Книга обновлена");
+        ioService.outputString(bookString);
+    }
+
     @ShellMethod(value = "Удаление книги в таблице BOOKS по ID", key = {"bd", "book deletion"})
     public void askForBookDeletion(long id) {
         bookOperationsService.deleteBookById(id);
@@ -37,14 +44,14 @@ public class AppShellController {
 
     @ShellMethod(value = "Просмотр книги в таблице BOOKS по ID", key = {"bs", "book search"})
     public void askForBookById(long id) {
-        Optional<Book> book = bookOperationsService.getBookById(id);
+        Book book = bookOperationsService.getBookById(id);
         String bookString = String.format("Книга ID: %d, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre());
         ioService.outputString(bookString);
     }
 
     @ShellMethod(value = "Узнать количество книг в таблице BOOKS", key = {"ba", "book amount"})
     public void askForBookAmount() {
-        int numberOfBooks = bookOperationsService.printNumberOfAllBooks();
+        long numberOfBooks = bookOperationsService.printNumberOfAllBooks();
         String numberOfBooksString = String.format("Количество книг в таблице = %d", numberOfBooks);
         ioService.outputString(numberOfBooksString);
     }

@@ -6,11 +6,11 @@ import java.util.Optional;
 
 public interface BookRepository {
 
-    int countBook();
+    long countBook();
 
     Book insertBook(Book book);
 
-    Optional<Book> getByBookId(long id);
+    Book getBookById(long id);
 
     List<Book> getAllBooks();
 

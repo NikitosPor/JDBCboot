@@ -6,7 +6,6 @@ import ru.otus.jdbcboot.domain.Book;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 @Service
@@ -35,15 +34,29 @@ public class BookOperationsService {
         return bookRepositoryJpa.insertBook(book);
     }
 
+    public void updateBook() {
+        ioService.outputString("Введите <ID_книги;Название книги> без пробелов и нажмите Enter");
+        String stringLine = ioService.readString();
+        ArrayList<String> listOfStrings = new ArrayList<String>();
+        Scanner scanner = new Scanner(stringLine);
+        scanner.useDelimiter(";");
+        while (scanner.hasNext()) {
+            String data = scanner.next();
+            listOfStrings.add(data);
+        }
+
+        bookRepositoryJpa.updateTitleById(Long.parseLong(listOfStrings.get(0)), listOfStrings.get(1));
+    }
+
     public void deleteBookById(long id) {
         bookRepositoryJpa.deleteBookById(id);
     }
 
-    public Optional<Book> getBookById(long id) {
-        return bookRepositoryJpa.getByBookId(id);
+    public Book getBookById(long id) {
+        return bookRepositoryJpa.getBookById(id);
     }
 
-    public int printNumberOfAllBooks() {
+    public long printNumberOfAllBooks() {
         return bookRepositoryJpa.countBook();
     }
 
