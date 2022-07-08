@@ -8,6 +8,7 @@ import ru.otus.jdbcboot.service.BookOperationsService;
 import ru.otus.jdbcboot.service.IOService;
 
 import java.util.List;
+import java.util.Optional;
 
 @ShellComponent
 public class AppShellController {
@@ -22,12 +23,9 @@ public class AppShellController {
 
     @ShellMethod(value = "Cоздание книги в таблице BOOKS", key = {"bc", "book creation"})
     public void askForBookCreation() {
-        long id = bookOperationsService.createBook();
-        Book book = bookOperationsService.getBookById(id);
-        if (book != null) {
-            String bookString = String.format("Книга создана ID: %d, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre());
-            ioService.outputString(bookString);
-        }
+        Book book = bookOperationsService.createBook();
+        String bookString = String.format("Книга создана ID: %d, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre());
+        ioService.outputString(bookString);
     }
 
     @ShellMethod(value = "Удаление книги в таблице BOOKS по ID", key = {"bd", "book deletion"})
@@ -39,7 +37,7 @@ public class AppShellController {
 
     @ShellMethod(value = "Просмотр книги в таблице BOOKS по ID", key = {"bs", "book search"})
     public void askForBookById(long id) {
-        Book book = bookOperationsService.getBookById(id);
+        Optional<Book> book = bookOperationsService.getBookById(id);
         String bookString = String.format("Книга ID: %d, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre());
         ioService.outputString(bookString);
     }
