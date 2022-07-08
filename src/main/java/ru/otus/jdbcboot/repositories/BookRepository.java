@@ -8,7 +8,7 @@ public interface BookRepository {
 
     int countBook();
 
-    long insertBook(Book book);
+    Book insertBook(Book book);
 
     Optional<Book> getByBookId(long id);
 

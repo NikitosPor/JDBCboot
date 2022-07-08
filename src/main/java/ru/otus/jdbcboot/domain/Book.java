@@ -46,7 +46,19 @@ public final class Book {
         this.genre=genre;
     }
 
-    long getId(){
+    public long getId(){
         return id;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+
+    public String getAuthor(){
+        return author;
+    }
+
+    public String getGenre(){
+        return genre;
     }
 }
