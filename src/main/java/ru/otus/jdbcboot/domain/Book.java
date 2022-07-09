@@ -28,7 +28,7 @@ public final class Book {
     @Column(name = "GENRE", nullable = false)
     private String genre;
 
-    @OneToMany(targetEntity = Comment.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Comment.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "BOOK_ID")
     private List<Comment> comments;
 

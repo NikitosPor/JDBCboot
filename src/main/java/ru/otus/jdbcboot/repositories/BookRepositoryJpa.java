@@ -20,7 +20,7 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public long countBook() {
+    public long countBooks() {
         Query query = em.createQuery("select count(b) from Book b");
         return (long) query.getSingleResult();
     }

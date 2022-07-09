@@ -57,7 +57,7 @@ public class BookOperationsService {
     }
 
     public long printNumberOfAllBooks() {
-        return bookRepositoryJpa.countBook();
+        return bookRepositoryJpa.countBooks();
     }
 
     public List<Book> printAllBooks() {
