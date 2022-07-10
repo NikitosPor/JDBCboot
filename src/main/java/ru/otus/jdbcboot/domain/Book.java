@@ -3,6 +3,9 @@ package ru.otus.jdbcboot.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,39 +31,45 @@ public final class Book {
     @Column(name = "GENRE", nullable = false)
     private String genre;
 
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 2)
     @OneToMany(targetEntity = Comment.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "BOOK_ID")
     private List<Comment> comments;
 
     public Book(long id, String title, String author, String genre) {
-        this.id=id;
-        this.title=title;
-        this.author=author;
-        this.genre=genre;
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
     }
 
     public Book(String title, String author, String genre) {
-        this.title=title;
-        this.author=author;
-        this.genre=genre;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
     }
 
     public Book() {
     }
 
-    public long getId(){
+    public long getId() {
         return id;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 
-    public String getAuthor(){
+    public String getAuthor() {
         return author;
     }
 
-    public String getGenre(){
+    public String getGenre() {
         return genre;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 }

@@ -66,8 +66,14 @@ public class AppShellController {
     public void askForAllBooks() {
         List<Book> listOfBooks = bookOperationsService.printAllBooks();
         for (Book book : listOfBooks) {
-            String bookString = String.format("Книга ID: %d, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre());
-            ioService.outputString(bookString);
+            if (book.getComments().size() == 0) {
+                String bookString = String.format("Книга ID: %d, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre());
+                ioService.outputString(bookString);
+            }
+            for (Comment comment : book.getComments()) {
+                String bookString = String.format("Книга ID: %d, Название: %s, Автор: %s, Жанр: %s, Комментарий: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre(), comment.getComment());
+                ioService.outputString(bookString);
+            }
         }
     }
 /////////////////////////////////////////////////COMMENTS SHELL//////////////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +117,7 @@ public class AppShellController {
     public void askForAllComments() {
         List<Comment> listOfComments = commentOperationsService.printAllComments();
         for (Comment comment : listOfComments) {
-            String commentString = String.format("Комментарий: %s, c ID: %d", comment.getComment(), comment.getId());
+            String commentString = String.format("ID: %d, : %s, BOOK_ID: %d", comment.getId(), comment.getComment(), comment.getBook_id());
             ioService.outputString(commentString);
         }
     }
