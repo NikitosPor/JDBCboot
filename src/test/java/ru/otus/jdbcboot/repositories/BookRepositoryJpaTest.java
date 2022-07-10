@@ -1,29 +1,38 @@
 package ru.otus.jdbcboot.repositories;
 
+import lombok.val;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.engine.jdbc.spi.JdbcServices;
+import org.hibernate.engine.jdbc.spi.SqlStatementLogger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.EmptyResultDataAccessException;
-import ru.otus.jdbcboot.domain.Book;
+import org.springframework.test.annotation.DirtiesContext;
+import ru.otus.jdbcboot.domain.Book
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Field;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
-//@DisplayName("Dao для работы с книгой должно")
-//@DataJpaTest
-//@Import(BookRepositoryJpa.class)
-//class BookRepositoryJpaTest {
-//
-//    private static final int EXPECTED_BOOKS_COUNT = 2;
-//
-//    @Autowired
-//    private BookRepositoryJpa dao;
+
+@DisplayName("Dao для работы с книгой должно")
+@DataJpaTest
+@Import(BookRepositoryJpa.class)
+class BookRepositoryJpaTest {
+
+    private static final long EXPECTED_BOOK_ID = 1;
+    private static final int EXPECTED_BOOKS_COUNT = 2;
+
+    @Autowired
+    private BookRepositoryJpa repo;
+
+    @Autowired
+    private TestEntityManager em;
 //
 //    @DisplayName("возвращать ожидаемое количество книг в БД")
 //    @Test
@@ -41,15 +50,14 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 //        assertThat(actualBook).usingRecursiveComparison().isEqualTo(expectedBook);
 //    }
 //
-//    @DisplayName("получать книгу по ID из БД")
-//    @Test
-//    void getByBookIdTest() {
-//        var expectedBook = new Book(1, "War and peace", "Leo Tolstoy", "Drama");
-//        var actualBook = dao.getByBookId(1);
-//        assertThat(actualBook)
-//                .usingRecursiveComparison()
-//                .isEqualTo(expectedBook);
-//    }
+    @DisplayName("получать книгу по ID из БД")
+    @Test
+    void getByBookIdTest() {
+        val optionalActualStudent = repo.getBookById(EXPECTED_BOOK_ID);
+        val expectedStudent = em.find(Book.class, EXPECTED_BOOK_ID);
+        assertThat(optionalActualStudent).isPresent().get()
+                .usingRecursiveComparison().isEqualTo(expectedStudent);
+    }
 //
 //    @DisplayName("получать все книги")
 //    @Test
@@ -72,4 +80,4 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 //        dao.deleteBookById(1);
 //        assertThatCode(() -> dao.getByBookId(1)).isInstanceOf(EmptyResultDataAccessException.class);
 //    }
-//}
+}
