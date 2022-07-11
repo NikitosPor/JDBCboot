@@ -1,22 +1,23 @@
 package ru.otus.jdbcboot.service;
 
 import org.springframework.stereotype.Service;
-import ru.otus.jdbcboot.repositories.BookRepositoryJpa;
+import ru.otus.jdbcboot.repositories.BookRepository;
 import ru.otus.jdbcboot.domain.Book;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 @Service
 public class BookOperationsService {
     private final IOServiceStreams ioService;
-    private final BookRepositoryJpa bookRepositoryJpa;
+    private final BookRepository bookRepository;
 
     //@Autowired
-    public BookOperationsService(IOServiceStreams ioService, BookRepositoryJpa bookRepositoryJpa) {
+    public BookOperationsService(IOServiceStreams ioService, BookRepository bookRepository) {
         this.ioService = ioService;
-        this.bookRepositoryJpa = bookRepositoryJpa;
+        this.bookRepository = bookRepository;
     }
 
     public Book createBook() {
@@ -31,7 +32,7 @@ public class BookOperationsService {
         }
         Book book = new Book(listOfStrings.get(0), listOfStrings.get(1), listOfStrings.get(2));
 
-        return bookRepositoryJpa.insertBook(book);
+        return bookRepository.save(book);
     }
 
     public void updateBook() {
@@ -45,22 +46,22 @@ public class BookOperationsService {
             listOfStrings.add(data);
         }
 
-        bookRepositoryJpa.updateTitleById(Long.parseLong(listOfStrings.get(0)), listOfStrings.get(1));
+        bookRepository.updateTitleById(Long.parseLong(listOfStrings.get(0)), listOfStrings.get(1));
     }
 
     public void deleteBookById(long id) {
-        bookRepositoryJpa.deleteBookById(id);
+        bookRepository.deleteById(id);
     }
 
-    public Book getBookById(long id) {
-        return bookRepositoryJpa.getBookById(id);
+    public Optional<Book> getBookById(long id) {
+        return bookRepository.findById(id);
     }
 
     public long printNumberOfAllBooks() {
-        return bookRepositoryJpa.countBooks();
+        return bookRepository.count();
     }
 
     public List<Book> printAllBooks() {
-        return bookRepositoryJpa.getAllBooks();
+        return (List<Book>) bookRepository.findAll();
     }
 }

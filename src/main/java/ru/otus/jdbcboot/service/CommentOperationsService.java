@@ -2,21 +2,22 @@ package ru.otus.jdbcboot.service;
 
 import org.springframework.stereotype.Service;
 import ru.otus.jdbcboot.domain.Comment;
-import ru.otus.jdbcboot.repositories.CommentRepositoryJpa;
+import ru.otus.jdbcboot.repositories.CommentRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 @Service
 public class CommentOperationsService {
     private final IOServiceStreams ioService;
-    private final CommentRepositoryJpa commentRepositoryJpa;
+    private final CommentRepository commentRepository;
 
     //@Autowired
-    public CommentOperationsService(IOServiceStreams ioService, CommentRepositoryJpa commentRepositoryJpa) {
+    public CommentOperationsService(IOServiceStreams ioService, CommentRepository commentRepository) {
         this.ioService = ioService;
-        this.commentRepositoryJpa = commentRepositoryJpa;
+        this.commentRepository = commentRepository;
     }
 
     public Comment createComment() {
@@ -31,7 +32,7 @@ public class CommentOperationsService {
         }
         Comment Comment = new Comment(Long.parseLong(listOfStrings.get(0)), listOfStrings.get(1));
 
-        return commentRepositoryJpa.insertComment(Comment);
+        return commentRepository.save(Comment);
     }
 
     public void updateComment() {
@@ -45,22 +46,22 @@ public class CommentOperationsService {
             listOfStrings.add(data);
         }
 
-        commentRepositoryJpa.updateCommentById(Long.parseLong(listOfStrings.get(0)), listOfStrings.get(1));
+        commentRepository.updateCommentById(Long.parseLong(listOfStrings.get(0)), listOfStrings.get(1));
     }
 
     public void deleteCommentById(long id) {
-        commentRepositoryJpa.deleteCommentById(id);
+        commentRepository.deleteById(id);
     }
 
-    public Comment getCommentById(long id) {
-        return commentRepositoryJpa.getCommentById(id);
+    public Optional<Comment> getCommentById(long id) {
+        return commentRepository.findById(id);
     }
 
     public long printNumberOfAllComments() {
-        return commentRepositoryJpa.countComments();
+        return commentRepository.count();
     }
 
     public List<Comment> printAllComments() {
-        return commentRepositoryJpa.getAllComments();
+        return (List<Comment>) commentRepository.findAll();
     }
 }

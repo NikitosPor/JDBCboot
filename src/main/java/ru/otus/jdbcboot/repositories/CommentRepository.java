@@ -1,22 +1,17 @@
 package ru.otus.jdbcboot.repositories;
 
-import ru.otus.jdbcboot.domain.Book;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.jdbcboot.domain.Comment;
 
-import java.util.List;
+public interface CommentRepository extends CrudRepository<Comment, Long> {
 
-public interface CommentRepository {
-
-    long countComments();
-
-    Comment insertComment(Comment comment);
-
-    Comment getCommentById(long id);
-
-    List<Comment> getAllComments();
-
-    void updateCommentById(long id, String title);
-
-    void deleteCommentById(long id);
+    @Modifying
+    @Transactional
+    @Query("update Comment c set c.comment = :comment where c.id = :id")
+    void updateCommentById(@Param("id") long id, @Param("comment") String comment);
 
 }

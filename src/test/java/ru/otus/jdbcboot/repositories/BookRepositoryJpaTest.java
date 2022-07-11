@@ -25,7 +25,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 //@DisplayName("Dao для работы с книгой должно")
 //@DataJpaTest
 //@Import(BookRepositoryJpa.class)
-//@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 //class BookRepositoryJpaTest {
 //
 //    private static final long EXPECTED_BOOK_ID = 1L;
@@ -56,8 +55,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 //    @DisplayName("получать книгу по ID из БД")
 //    @Test
 //    void getByBookIdTest() {
-//      em.merge(new Book("Ruslan and Ludmila", "Alex Pushkin", "Drama"));
-//  //      val actualBook = repo.getBookById(EXPECTED_BOOK_ID);
+//   //   em.persist(new Book("Ruslan and Ludmila", "Alex Pushkin", "Drama"));
+//        val actualBook = repo.getBookById(EXPECTED_BOOK_ID);
 // //       val expectedStudent = em.find(Book.class, EXPECTED_BOOK_ID);
 // //       assertThat(optionalActualStudent)
 ////                .usingRecursiveComparison().isEqualTo(expectedStudent);

@@ -50,7 +50,7 @@ public class AppShellController {
 
     @ShellMethod(value = "Просмотр книги в таблице BOOKS по ID", key = {"bs", "book search"})
     public void askForBookById(long id) {
-        Book book = bookOperationsService.getBookById(id);
+        Book book = bookOperationsService.getBookById(id).orElse(null);
         String bookString = String.format("Книга ID: %d, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre());
         ioService.outputString(bookString);
     }
@@ -101,7 +101,7 @@ public class AppShellController {
 
     @ShellMethod(value = "Просмотр комментария в таблице Comments по ID", key = {"cs", "comment search"})
     public void askForCommentById(long id) {
-        Comment comment = commentOperationsService.getCommentById(id);
+        Comment comment = commentOperationsService.getCommentById(id).orElse(null);
         String commentString = String.format("Комментарий: %s, c ID: %d", comment.getComment(), comment.getId());
         ioService.outputString(commentString);
     }

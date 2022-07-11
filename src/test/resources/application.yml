@@ -11,3 +11,6 @@ spring:
   shell:
     interactive:
       enabled: false
+  jpa:
+    database: H2
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect

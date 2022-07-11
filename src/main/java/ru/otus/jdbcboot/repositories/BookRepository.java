@@ -1,20 +1,17 @@
 package ru.otus.jdbcboot.repositories;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.jdbcboot.domain.Book;
-import java.util.List;
 
-public interface BookRepository {
+public interface BookRepository extends CrudRepository<Book, Long> {
 
-    long countBooks();
-
-    Book insertBook(Book book);
-
-    Book getBookById(long id);
-
-    List<Book> getAllBooks();
-
-    void updateTitleById(long id, String title);
-
-    void deleteBookById(long id);
+    @Modifying
+    @Transactional
+    @Query("update Book b set b.title = :title where b.id = :id")
+    void updateTitleById(@Param("id") long id, @Param("title") String title);
 
 }
