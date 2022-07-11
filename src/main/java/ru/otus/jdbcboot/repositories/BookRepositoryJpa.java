@@ -41,15 +41,16 @@ public class BookRepositoryJpa implements BookRepository {
     public Book getBookById(long id) {
         Query query = em.createQuery("select b from Book b where b.id= :id", Book.class);
         query.setParameter("id", id);
-        return (Book) query.getSingleResult();
+        Book book = (Book) query.getSingleResult();
+        return book;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
-        EntityGraph<?> entityGraph = em.getEntityGraph("book-comments-entity-graph");
+   //     EntityGraph<?> entityGraph = em.getEntityGraph("book-comments-entity-graph");
         TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
-        query.setHint("javax.persistence.fetchgraph", entityGraph);
+ //       query.setHint("javax.persistence.fetchgraph", entityGraph);
         return query.getResultList();
     }
 

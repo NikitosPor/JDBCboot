@@ -32,7 +32,7 @@ public final class Book {
     private String genre;
 
     @Fetch(FetchMode.SELECT)
-    @BatchSize(size = 2)
+    @BatchSize(size = 10)
     @OneToMany(targetEntity = Comment.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "BOOK_ID")
     private List<Comment> comments;
