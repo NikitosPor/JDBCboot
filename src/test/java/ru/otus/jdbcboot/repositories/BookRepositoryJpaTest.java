@@ -57,10 +57,9 @@ class BookRepositoryJpaTest {
     @Test
     void getByBookIdTest() {
         val optionalActualBook = repo.getBookById(EXPECTED_BOOK_ID);
-  //      val actualBook = repo.getBookById(EXPECTED_BOOK_ID);
- //       val expectedStudent = em.find(Book.class, EXPECTED_BOOK_ID);
- //       assertThat(optionalActualStudent)
-//                .usingRecursiveComparison().isEqualTo(expectedStudent);
+ //       val expectedBook = em.find(Book.class, EXPECTED_BOOK_ID);
+ //       assertThat(optionalActualBook).isPresent().get()
+//                .usingRecursiveComparison().isEqualTo(expectedBook);
     }
 //
 //    @DisplayName("получать все книги")
