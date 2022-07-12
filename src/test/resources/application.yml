@@ -5,6 +5,12 @@ spring:
     init:
       mode: always
       data-locations: data.sql
+  jpa:
+    database: H2
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
   main:
     allow-circular-references: true
     web-application-type: NONE
