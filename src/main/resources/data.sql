@@ -12,3 +12,11 @@ insert into BOOKS (TITLE, AUTHOR, GENRE) values ('Kazaks', 'Leo Tolstoy', 'Tale'
 insert into BOOKS (TITLE, AUTHOR, GENRE) values ('Silent Don', 'Michael Sholokhov', 'Drama');
 insert into BOOKS (TITLE, AUTHOR, GENRE) values ('Sherlock Holmes', 'Arthur Conan Doyle', 'Detective');
 insert into BOOKS (TITLE, AUTHOR, GENRE) values ('Taras Bulba', 'Nikolay Gogol', 'Tale');
+
+insert into COMMENTS (BOOK_ID, COMMENT) values (1, 'Good example of traditional Russian culture');
+insert into COMMENTS (BOOK_ID, COMMENT) values (1, 'One of the most epic drama in the world');
+insert into COMMENTS (BOOK_ID, COMMENT) values (1, 'Leo Tolstoy wrote it when he was old boy');
+insert into COMMENTS (BOOK_ID, COMMENT) values (2, 'Famous literature composition');
+insert into COMMENTS (BOOK_ID, COMMENT) values (2, 'One of the most epic drama in the world');
+insert into COMMENTS (BOOK_ID, COMMENT) values (2, 'Alex Pushkin wrote it when he was young boy');
+insert into COMMENTS (BOOK_ID, COMMENT) values (2, 'Russian pupils learn it in school');
