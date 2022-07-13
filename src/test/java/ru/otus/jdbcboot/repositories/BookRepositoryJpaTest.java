@@ -25,12 +25,12 @@ import static org.assertj.core.api.Assertions.*;
 //@Import(CommentRepository.class)
 class BookRepositoryJpaTest {
 
-    private static final long EXPECTED_BOOK_ID = 1L;
-    private static final int EXPECTED_BOOKS_COUNT = 2;
-
-    private static final List<String> EXPECTED_BOOKS_TITLES = List.of("War and peace", "Eugene Onegin");
-    private static final List<String> EXPECTED_BOOK_AUTHORS = List.of("Leo Tolstoy", "Alex Pushkin");
-    private static final List<String> EXPECTED_BOOKS_GENRES = List.of("Drama", "Tale");
+//    private static final long EXPECTED_BOOK_ID = 1L;
+//    private static final int EXPECTED_BOOKS_COUNT = 2;
+//
+//    private static final List<String> EXPECTED_BOOKS_TITLES = List.of("War and peace", "Eugene Onegin");
+//    private static final List<String> EXPECTED_BOOK_AUTHORS = List.of("Leo Tolstoy", "Alex Pushkin");
+//    private static final List<String> EXPECTED_BOOKS_GENRES = List.of("Drama", "Tale");
     // private static final List<String> EXPECTED_BOOKS_COMMENTS = List.of("One of the most epic drama in the world", "Leo Tolstoy wrote it when he was old boy", "Famous literature composition", "The greatest literature monument in tje world");
 
     @Autowired
