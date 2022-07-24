@@ -1,9 +1,9 @@
 package ru.otus.jdbcboot.repositories;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import ru.otus.jdbcboot.domain.Comment;
+import ru.otus.jdbcboot.domain.Author;
 
-public interface CommentRepository extends MongoRepository<Comment, Long>, CommentRepositoryCustom {
+public interface AuthorRepository extends MongoRepository<Author, Long> {
 
 //    @Modifying
 //    @Transactional

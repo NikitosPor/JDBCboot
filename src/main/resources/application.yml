@@ -1,29 +1,22 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    #initialization-mode: always
-    #schema: schema.sql
-    #data: data.sql
-  main:
-    allow-circular-references: true
-    web-application-type: NONE
+  data:
+    mongodb:
+#      port: 0
+#      database: test
+      host: localhost
+      port: 27017
+      database: awesomeMongo
 
-  sql:
-    init:
-      mode: always
-      data-locations: data.sql
-      schema-locations: schema.sql
-  h2:
-    console:
-      path: /h2-console
-      settings:
-        web-allow-others: true
+mongock:
+  runner-type: "ApplicationRunner" # default
+  #runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - ru.otus.jdbcboot.changelogs
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local
 
-  jpa:
-    database: H2
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-    generate-ddl: false
-    hibernate:
-      ddl-auto: none
-
-    show-sql: true
+logging:
+  level:
+    root: ERROR

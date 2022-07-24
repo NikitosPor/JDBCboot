@@ -1,6 +1,8 @@
 package ru.otus.jdbcboot.service;
 
 import org.springframework.stereotype.Service;
+import ru.otus.jdbcboot.domain.Author;
+import ru.otus.jdbcboot.domain.Genre;
 import ru.otus.jdbcboot.repositories.BookRepository;
 import ru.otus.jdbcboot.domain.Book;
 
@@ -30,7 +32,7 @@ public class BookOperationsService {
             String data = scanner.next();
             listOfStrings.add(data);
         }
-        Book book = new Book(listOfStrings.get(0), listOfStrings.get(1), listOfStrings.get(2));
+        Book book = new Book(listOfStrings.get(0), new Author(listOfStrings.get(1)), new Genre(listOfStrings.get(2)));
 
         return bookRepository.save(book);
     }

@@ -117,7 +117,7 @@ public class AppShellController {
     public void askForAllComments() {
         List<Comment> listOfComments = commentOperationsService.printAllComments();
         for (Comment comment : listOfComments) {
-            String commentString = String.format("ID: %d, : %s, BOOK_ID: %d", comment.getId(), comment.getComment(), comment.getBook_id());
+            String commentString = String.format("ID: %d, : %s, BOOK_ID: %d", comment.getId(), comment.getComment()/*, comment.getBook_id()*/);
             ioService.outputString(commentString);
         }
     }

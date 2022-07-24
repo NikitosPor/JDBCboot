@@ -3,22 +3,22 @@ package ru.otus.jdbcboot.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "AUTHORS")
+@Document
 public final class Author {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
-    @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 
+    public Author(String name) {
+        this.name = name;
+    }
 }
