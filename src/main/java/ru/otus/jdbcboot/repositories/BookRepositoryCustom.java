@@ -2,6 +2,8 @@ package ru.otus.jdbcboot.repositories;
 
 public interface BookRepositoryCustom {
 
-    void updateTitleById(long id, String title);
+    void updateTitleByTitle(String id, String title);
+
+    void deleteBookWithAllCommentsByTitle(String id);
 
 }

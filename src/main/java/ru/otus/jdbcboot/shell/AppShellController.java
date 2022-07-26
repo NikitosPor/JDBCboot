@@ -1,5 +1,6 @@
 package ru.otus.jdbcboot.shell;
 
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -10,7 +11,6 @@ import ru.otus.jdbcboot.service.CommentOperationsService;
 import ru.otus.jdbcboot.service.IOService;
 
 import java.util.List;
-import java.util.Optional;
 
 @ShellComponent
 public class AppShellController {
@@ -30,7 +30,7 @@ public class AppShellController {
     @ShellMethod(value = "Cоздание книги в таблице BOOKS", key = {"bc", "book creation"})
     public void askForBookCreation() {
         Book book = bookOperationsService.createBook();
-        String bookString = String.format("Книга создана ID: %d, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre());
+        String bookString = String.format("Книга создана ID: %s, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor().getName(), book.getGenre().getTitle());
         ioService.outputString(bookString);
     }
 
@@ -41,17 +41,17 @@ public class AppShellController {
         ioService.outputString(bookString);
     }
 
-    @ShellMethod(value = "Удаление книги в таблице BOOKS по ID", key = {"bd", "book deletion"})
-    public void askForBookDeletion(long id) {
-        bookOperationsService.deleteBookById(id);
-        String bookIdString = String.format("Книга c ID: %s удалена", id);
+    @ShellMethod(value = "Удаление книги в таблице BOOKS по Названию", key = {"bd", "book deletion"})
+    public void askForBookDeletion() {
+        String title = bookOperationsService.deleteBookByTitle();
+        String bookIdString = String.format("Книга c Названием: %s, а также все комментарии к ней удалены", title);
         ioService.outputString(bookIdString);
     }
 
     @ShellMethod(value = "Просмотр книги в таблице BOOKS по ID", key = {"bs", "book search"})
-    public void askForBookById(long id) {
+    public void askForBookById(String id) {
         Book book = bookOperationsService.getBookById(id).orElse(null);
-        String bookString = String.format("Книга ID: %d, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre());
+        String bookString = String.format("Книга ID: %s, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre());
         ioService.outputString(bookString);
     }
 
@@ -66,14 +66,8 @@ public class AppShellController {
     public void askForAllBooks() {
         List<Book> listOfBooks = bookOperationsService.printAllBooks();
         for (Book book : listOfBooks) {
-            if (book.getComments().size() == 0) {
-                String bookString = String.format("Книга ID: %d, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre());
-                ioService.outputString(bookString);
-            }
-            for (Comment comment : book.getComments()) {
-                String bookString = String.format("Книга ID: %d, Название: %s, Автор: %s, Жанр: %s, Комментарий: %s", book.getId(), book.getTitle(), book.getAuthor(), book.getGenre(), comment.getComment());
-                ioService.outputString(bookString);
-            }
+            String bookString = String.format("Книга ID: %s, Название: %s, Автор: %s, Жанр: %s", book.getId(), book.getTitle(), book.getAuthor().getName(), book.getGenre().getTitle());
+            ioService.outputString(bookString);
         }
     }
 /////////////////////////////////////////////////COMMENTS SHELL//////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +75,7 @@ public class AppShellController {
     @ShellMethod(value = "Cоздание комментария в таблице COMMENTS", key = {"cc", "comment creation"})
     public void askForCommentCreation() {
         Comment comment = commentOperationsService.createComment();
-        String commentString = String.format("Создан комментарий: %s, c ID: %d", comment.getComment(), comment.getId());
+        String commentString = String.format("Создан комментарий: %s, c ID: %s", comment.getComment(), comment.getId());
         ioService.outputString(commentString);
     }
 
@@ -93,16 +87,16 @@ public class AppShellController {
     }
 
     @ShellMethod(value = "Удаление комментария в таблице Comments по ID", key = {"cd", "comment deletion"})
-    public void askForCommentDeletion(long id) {
+    public void askForCommentDeletion(String id) {
         commentOperationsService.deleteCommentById(id);
-        String сommentIdString = String.format("Комментарий c ID: %d удален", id);
+        String сommentIdString = String.format("Комментарий c ID: %s удален", id);
         ioService.outputString(сommentIdString);
     }
 
     @ShellMethod(value = "Просмотр комментария в таблице Comments по ID", key = {"cs", "comment search"})
-    public void askForCommentById(long id) {
+    public void askForCommentById(String id) {
         Comment comment = commentOperationsService.getCommentById(id).orElse(null);
-        String commentString = String.format("Комментарий: %s, c ID: %d", comment.getComment(), comment.getId());
+        String commentString = String.format("Комментарий: %s, c ID: %s", comment.getComment(), comment.getId());
         ioService.outputString(commentString);
     }
 
@@ -115,9 +109,10 @@ public class AppShellController {
 
     @ShellMethod(value = "Показать все комментарии в таблице Comments", key = {"cl", "comment list"})
     public void askForAllComments() {
-        List<Comment> listOfComments = commentOperationsService.printAllComments();
+        val listOfComments = commentOperationsService.printAllComments();
         for (Comment comment : listOfComments) {
-            String commentString = String.format("ID: %d, : %s, BOOK_ID: %d", comment.getId(), comment.getComment()/*, comment.getBook_id()*/);
+            String commentString = String.format("ID: %s, : %s", comment.getId(), comment.getComment());
+
             ioService.outputString(commentString);
         }
     }

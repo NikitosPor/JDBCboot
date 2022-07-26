@@ -2,9 +2,9 @@ package ru.otus.jdbcboot.service;
 
 import org.springframework.stereotype.Service;
 import ru.otus.jdbcboot.domain.Author;
+import ru.otus.jdbcboot.domain.Book;
 import ru.otus.jdbcboot.domain.Genre;
 import ru.otus.jdbcboot.repositories.BookRepository;
-import ru.otus.jdbcboot.domain.Book;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +34,11 @@ public class BookOperationsService {
         }
         Book book = new Book(listOfStrings.get(0), new Author(listOfStrings.get(1)), new Genre(listOfStrings.get(2)));
 
-        return bookRepository.save(book);
+        return bookRepository.insert(book);
     }
 
     public void updateBook() {
-        ioService.outputString("Введите <ID_книги;Название книги> без пробелов и нажмите Enter");
+        ioService.outputString("Введите <Старое_название_книги;Новое_название_книги> и нажмите Enter");
         String stringLine = ioService.readString();
         ArrayList<String> listOfStrings = new ArrayList<String>();
         Scanner scanner = new Scanner(stringLine);
@@ -48,14 +48,18 @@ public class BookOperationsService {
             listOfStrings.add(data);
         }
 
-        bookRepository.updateTitleById(Long.parseLong(listOfStrings.get(0)), listOfStrings.get(1));
+        bookRepository.updateTitleByTitle(listOfStrings.get(0), listOfStrings.get(1));
     }
 
-    public void deleteBookById(long id) {
-        bookRepository.deleteById(id);
+    public String deleteBookByTitle() {
+        ioService.outputString("Введите <Название книги> и нажмите Enter");
+        String stringLine = ioService.readString();
+        bookRepository.deleteBookWithAllCommentsByTitle(stringLine);
+
+        return stringLine;
     }
 
-    public Optional<Book> getBookById(long id) {
+    public Optional<Book> getBookById(String id) {
         return bookRepository.findById(id);
     }
 

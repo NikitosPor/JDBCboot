@@ -2,14 +2,17 @@ spring:
   data:
     mongodb:
 #      port: 0
-#      database: test
+#      database: awesomeMongo
       host: localhost
       port: 27017
-      database: awesomeMongo
+      database: booksDB
+  main:
+    allow-circular-references: true
+    web-application-type: NONE
 
 mongock:
-  runner-type: "ApplicationRunner" # default
-  #runner-type: "InitializingBean"
+#  runner-type: "ApplicationRunner" # default
+  runner-type: "InitializingBean"
   change-logs-scan-package:
     - ru.otus.jdbcboot.changelogs
   mongo-db:

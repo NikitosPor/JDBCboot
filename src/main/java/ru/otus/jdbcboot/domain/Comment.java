@@ -10,10 +10,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document
-public final class Comment {
+public class Comment {
 
     @Id
-    private long id;
+    private String id;
 
     private String comment;
 

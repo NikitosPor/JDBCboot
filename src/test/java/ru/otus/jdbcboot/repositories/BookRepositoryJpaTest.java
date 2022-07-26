@@ -85,10 +85,10 @@ class BookRepositoryJpaTest {
 //        assertThatCode(() -> repo.getBookById(1)).isInstanceOf(Exception.class);
 //    }
 
-    @DisplayName("обновлять TITLE по ID")
-    @Test
-    void updateTitleBookById() {
-        assertThat(Objects.requireNonNull(repo.findById(1L).orElse(null)).getTitle()).isEqualTo("War and peace");
-
-    }
+//    @DisplayName("обновлять TITLE по ID")
+//    @Test
+//    void updateTitleBookById() {
+//        assertThat(Objects.requireNonNull(repo.findById(1L).orElse(null)).getTitle()).isEqualTo("War and peace");
+//
+//    }
 }

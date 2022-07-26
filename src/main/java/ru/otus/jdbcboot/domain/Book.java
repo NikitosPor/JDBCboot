@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @Document
-public final class Book {
+public class Book {
 
     @Id
-    private long id;
+    private String id;
 
     private String title;
 
@@ -22,7 +22,7 @@ public final class Book {
     @DBRef
     private List<Comment> comments;
 
-    public Book(long id, String title, Author author, Genre genre) {
+    public Book(String id, String title, Author author, Genre genre) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -42,10 +42,18 @@ public final class Book {
         this.comments = Arrays.asList(comment);
     }
 
+    public Book(String id, String title, Author author, Genre genre, Comment... comment) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.comments = Arrays.asList(comment);
+    }
+
     public Book() {
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 

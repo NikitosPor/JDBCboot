@@ -11,10 +11,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document
-public final class Author {
+public class Author {
 
     @Id
-    private long id;
+    private String id;
 
     private String name;
 

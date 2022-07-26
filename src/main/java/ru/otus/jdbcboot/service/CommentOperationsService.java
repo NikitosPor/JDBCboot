@@ -21,7 +21,7 @@ public class CommentOperationsService {
     }
 
     public Comment createComment() {
-        ioService.outputString("Введите <ID_Книги;Ваш_комментарий> и нажмите Enter");
+        ioService.outputString("Введите <Название_Книги;Ваш_комментарий> и нажмите Enter");
         String stringLine = ioService.readString();
         ArrayList<String> listOfStrings = new ArrayList<String>();
         Scanner scanner = new Scanner(stringLine);
@@ -30,9 +30,9 @@ public class CommentOperationsService {
             String data = scanner.next();
             listOfStrings.add(data);
         }
-        Comment Comment = new Comment(Long.parseLong(listOfStrings.get(0)), listOfStrings.get(1));
+        // Comment Comment = new Comment(/*Long.parseLong(listOfStrings.get(0)),*/ listOfStrings.get(1));
 
-        return commentRepository.save(Comment);
+        return commentRepository.insertCommentAndLinkWithBookByTitle(listOfStrings.get(0), listOfStrings.get(1));
     }
 
     public void updateComment() {
@@ -46,14 +46,14 @@ public class CommentOperationsService {
             listOfStrings.add(data);
         }
 
-        commentRepository.updateCommentById(Long.parseLong(listOfStrings.get(0)), listOfStrings.get(1));
+        commentRepository.updateCommentById(listOfStrings.get(0), listOfStrings.get(1));
     }
 
-    public void deleteCommentById(long id) {
+    public void deleteCommentById(String id) {
         commentRepository.deleteById(id);
     }
 
-    public Optional<Comment> getCommentById(long id) {
+    public Optional<Comment> getCommentById(String id) {
         return commentRepository.findById(id);
     }
 
@@ -62,6 +62,6 @@ public class CommentOperationsService {
     }
 
     public List<Comment> printAllComments() {
-        return (List<Comment>) commentRepository.findAll();
+        return commentRepository.findAll();
     }
 }
