@@ -9,6 +9,7 @@ import ru.otus.jdbcboot.domain.Book;
 import ru.otus.jdbcboot.domain.Comment;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class BookRepositoryCustomImpl implements BookRepositoryCustom {
@@ -29,8 +30,8 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom {
     public void deleteBookWithAllCommentsByTitle(String bookTitle) {
         Query queryBook = new Query(Criteria.where("title").is(bookTitle));
         try {
-            List<Comment> comments = mongoTemplate.findOne(queryBook, Book.class).getComments();
-            commentRepository.deleteAll(comments);
+            List<String> commentsId = mongoTemplate.findOne(queryBook, Book.class).getComments().stream().map(Comment::getId).collect(Collectors.toList());
+            commentRepository.deleteByIdIn(commentsId);
         } catch (Exception npe) {
             //нет комментов
         } finally {
