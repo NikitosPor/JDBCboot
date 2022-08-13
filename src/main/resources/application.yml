@@ -1,20 +1,25 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    #initialization-mode: always
-    #schema: schema.sql
-    #data: data.sql
+  data:
+    mongodb:
+#      port: 0
+#      database: awesomeMongo
+      host: localhost
+      port: 27017
+      database: booksDB
   main:
     allow-circular-references: true
     web-application-type: NONE
 
-  sql:
-    init:
-      mode: always
-      data-locations: data.sql
-      schema-locations: schema.sql
-  h2:
-    console:
-      path: /h2-console
-      settings:
-        web-allow-others: true
+mongock:
+#  runner-type: "ApplicationRunner" # default
+  runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - ru.otus.jdbcboot.changelogs
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local
+
+logging:
+  level:
+    root: ERROR

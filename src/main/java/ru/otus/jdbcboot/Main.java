@@ -1,15 +1,16 @@
 package ru.otus.jdbcboot;
 
-import org.h2.tools.Console;
+import com.github.cloudyrock.spring.v5.EnableMongock;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import java.sql.SQLException;
-
+@EnableMongock
 @SpringBootApplication
+@EnableConfigurationProperties
 public class Main {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
-        Console.main(args);
+       // Console.main(args);
     }
 }

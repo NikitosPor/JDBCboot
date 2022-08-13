@@ -1,31 +1,75 @@
 package ru.otus.jdbcboot.domain;
 
-public final class Book {
-    private final long id;
-    private final String title;
-    private final String author;
-    private final String genre;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-    public Book(long id, String title, String author, String genre) {
+import java.util.Arrays;
+import java.util.List;
+
+@Document
+public class Book {
+
+    @Id
+    private String id;
+
+    private String title;
+
+    private Author author;
+
+    private Genre genre;
+
+    @DBRef
+    private List<Comment> comments;
+
+    public Book(String id, String title, Author author, Genre genre) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.genre = genre;
     }
 
-    public long getId(){
+    public Book(String title, Author author, Genre genre) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
+
+    public Book(String title, Author author, Genre genre, Comment... comment) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.comments = Arrays.asList(comment);
+    }
+
+    public Book(String id, String title, Author author, Genre genre, Comment... comment) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.comments = Arrays.asList(comment);
+    }
+
+    public Book() {
+    }
+
+    public String getId() {
         return id;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 
-    public String getAuthor(){
+    public Author getAuthor() {
         return author;
     }
 
-    public String getGenre(){
+    public Genre getGenre() {
         return genre;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 }
