@@ -68,6 +68,6 @@ public class BookOperationsService {
     }
 
     public List<Book> printAllBooks() {
-        return (List<Book>) bookRepository.findAll();
+        return bookRepository.findAll();
     }
 }
