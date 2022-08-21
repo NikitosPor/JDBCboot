@@ -53,7 +53,7 @@ public class BookOperationsService {
     }
 
     public Book getBookById(long id) {
-        return bookRepositoryJpa.getBookById(id);
+        return bookRepositoryJpa.findBookById(id);
     }
 
     public long printNumberOfAllBooks() {

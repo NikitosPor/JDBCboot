@@ -8,12 +8,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.otus.jdbcboot.repositories.BookRepositoryJpa;
 import ru.otus.jdbcboot.domain.Book;
 
-import java.util.List;
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @DisplayName("Тест сервиса BookOperationsService")
@@ -48,7 +44,7 @@ class BookOperationsServiceTest {
     @Test
     void getBookByIdTest() {
         Book expectedBook = new Book(10, "Anna Karenina", "Leo Tolstoy", "Drama");
-        when(bookRepo.getBookById(10)).thenReturn(expectedBook); //  дописал А
+        when(bookRepo.findBookById(10)).thenReturn(expectedBook); //  дописал А
 
         assertThat(bookOperationsService.getBookById(10))
                 .isEqualTo(expectedBook);

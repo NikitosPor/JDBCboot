@@ -47,14 +47,14 @@ class BookRepositoryJpaTest {
     void insertBookTest() {
         var expectedBook = new Book("Anna Karenina", "Leo Tolstoy", "Drama");
         Book book = repo.insertBook(expectedBook);
-        var actualBook = repo.getBookById(book.getId());
+        var actualBook = repo.findBookById(book.getId());
         assertThat(actualBook).usingRecursiveComparison().isEqualTo(expectedBook);
     }
 
     @DisplayName("получать книгу по ID из БД")
     @Test
     void getByBookIdTest() {
-        val optionalActualBook = repo.getBookById(EXPECTED_BOOK_ID);
+        val optionalActualBook = repo.findBookById(EXPECTED_BOOK_ID);
         val expectedBook = em.find(Book.class, EXPECTED_BOOK_ID);
         assertThat(optionalActualBook)
                 .usingRecursiveComparison().isEqualTo(expectedBook);
@@ -75,8 +75,8 @@ class BookRepositoryJpaTest {
     @DisplayName("удалять книгу по ID из БД")
     @Test
     void deleteBookByIdTest() {
-        assertThatCode(() -> repo.getBookById(1)).doesNotThrowAnyException();
+        assertThatCode(() -> repo.findBookById(1)).doesNotThrowAnyException();
         repo.deleteBookById(1);
-        assertThatCode(() -> repo.getBookById(1)).isInstanceOf(Exception.class);
+        assertThatCode(() -> repo.findBookById(1)).isInstanceOf(Exception.class);
     }
 }

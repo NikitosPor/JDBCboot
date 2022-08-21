@@ -9,7 +9,7 @@ public interface BookRepository {
 
     Book insertBook(Book book);
 
-    Book getBookById(long id);
+    Book findBookById(long id);
 
     List<Book> getAllBooks();
 

@@ -19,14 +19,12 @@ public class BookRepositoryJpa implements BookRepository {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public long countBooks() {
         Query query = em.createQuery("select count(b) from Book b");
         return (long) query.getSingleResult();
     }
 
     @Override
-    @Transactional
     public Book insertBook(Book book) {
         if (book.getId() <= 0) {
             em.persist(book);
@@ -37,8 +35,7 @@ public class BookRepositoryJpa implements BookRepository {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Book getBookById(long id) {
+    public Book findBookById(long id) {
         Query query = em.createQuery("select b from Book b where b.id= :id", Book.class);
         query.setParameter("id", id);
         Book book = (Book) query.getSingleResult();
@@ -46,14 +43,12 @@ public class BookRepositoryJpa implements BookRepository {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
         TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
         return query.getResultList();
     }
 
     @Override
-    @Transactional
     public void deleteBookById(long id) {
         Query query = em.createQuery("delete from Book b where b.id= :id");
         query.setParameter("id", id);
@@ -61,7 +56,6 @@ public class BookRepositoryJpa implements BookRepository {
     }
 
     @Override
-    @Transactional
     public void updateTitleById(long id, String title) {
         Query query = em.createQuery("update Book b set b.title = :title where b.id = :id");
         query.setParameter("title", title);
