@@ -1,6 +1,7 @@
 package ru.otus.jdbcboot.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.jdbcboot.domain.Comment;
 import ru.otus.jdbcboot.repositories.CommentRepository;
 
@@ -35,6 +36,7 @@ public class CommentOperationsService {
         return commentRepository.save(Comment);
     }
 
+    @Transactional
     public void updateComment() {
         ioService.outputString("Введите <ID_Комментария;Ваш_комментарий> и нажмите Enter");
         String stringLine = ioService.readString();

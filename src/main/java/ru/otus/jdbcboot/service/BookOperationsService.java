@@ -1,6 +1,7 @@
 package ru.otus.jdbcboot.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.jdbcboot.repositories.BookRepository;
 import ru.otus.jdbcboot.domain.Book;
 
@@ -23,7 +24,7 @@ public class BookOperationsService {
     public Book createBook() {
         ioService.outputString("Введите <Название книги;Автора;Жанр> без пробелов и нажмите Enter");
         String stringLine = ioService.readString();
-        ArrayList<String> listOfStrings = new ArrayList<String>();
+        List<String> listOfStrings = new ArrayList<String>();
         Scanner scanner = new Scanner(stringLine);
         scanner.useDelimiter(";");
         while (scanner.hasNext()) {
@@ -35,6 +36,7 @@ public class BookOperationsService {
         return bookRepository.save(book);
     }
 
+    @Transactional
     public void updateBook() {
         ioService.outputString("Введите <ID_книги;Название книги> без пробелов и нажмите Enter");
         String stringLine = ioService.readString();
