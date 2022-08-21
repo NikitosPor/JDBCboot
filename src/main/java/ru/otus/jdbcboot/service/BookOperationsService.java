@@ -22,7 +22,7 @@ public class BookOperationsService {
     public Book createBook() {
         ioService.outputString("Введите <Название книги;Автора;Жанр> без пробелов и нажмите Enter");
         String stringLine = ioService.readString();
-        ArrayList<String> listOfStrings = new ArrayList<String>();
+        List<String> listOfStrings = new ArrayList<String>();
         Scanner scanner = new Scanner(stringLine);
         scanner.useDelimiter(";");
         while (scanner.hasNext()) {

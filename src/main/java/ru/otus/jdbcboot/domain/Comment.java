@@ -17,13 +17,13 @@ public final class Comment {
     private long id;
 
     @Column(name = "BOOK_ID", nullable = false)
-    private long book_id;
+    private long bookId;
 
     @Column(name = "COMMENT", nullable = false)
     private String comment;
 
     public Comment(long book_id, String comment) {
-        this.book_id=book_id;
+        this.bookId =book_id;
         this.comment=comment;
     }
 }

@@ -10,7 +10,6 @@ import ru.otus.jdbcboot.service.CommentOperationsService;
 import ru.otus.jdbcboot.service.IOService;
 
 import java.util.List;
-import java.util.Optional;
 
 @ShellComponent
 public class AppShellController {
@@ -117,7 +116,7 @@ public class AppShellController {
     public void askForAllComments() {
         List<Comment> listOfComments = commentOperationsService.printAllComments();
         for (Comment comment : listOfComments) {
-            String commentString = String.format("ID: %d, : %s, BOOK_ID: %d", comment.getId(), comment.getComment(), comment.getBook_id());
+            String commentString = String.format("ID: %d, : %s, BOOK_ID: %d", comment.getId(), comment.getComment(), comment.getBookId());
             ioService.outputString(commentString);
         }
     }

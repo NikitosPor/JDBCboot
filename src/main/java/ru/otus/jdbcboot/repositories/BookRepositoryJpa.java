@@ -48,9 +48,7 @@ public class BookRepositoryJpa implements BookRepository {
     @Override
     @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
-   //     EntityGraph<?> entityGraph = em.getEntityGraph("book-comments-entity-graph");
         TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
- //       query.setHint("javax.persistence.fetchgraph", entityGraph);
         return query.getResultList();
     }
 
