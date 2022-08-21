@@ -18,3 +18,12 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true
+
+  jpa:
+    database: H2
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+    show-sql: true
